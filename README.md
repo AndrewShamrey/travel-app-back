@@ -18,8 +18,7 @@ or
 
 --- 
 
-<!-- ### Also you can start the server by following [this](https://andrews-react-game.herokuapp.com/) link  -->
-
+### Also you can start the server by following [this](https://travel-app-back-113.herokuapp.com/) link 
 
 ```
 READ full list of countries -> /api/countries
