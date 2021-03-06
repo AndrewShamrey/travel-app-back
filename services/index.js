@@ -9,7 +9,7 @@ exports.getCountries = async function (query) {
   }
   const skip = limit * (page - 1);
   let allCountries = [];
-  const cursor = Country.find({ _deletedAt: null }).select('_id lang name shortName body').skip(skip).limit(limit).cursor();
+  const cursor = Country.find({ _deletedAt: null }).select('_id lang name shortName capital timeDifference description').skip(skip).limit(limit).cursor();
   for (let doc = await cursor.next(); ; doc = await cursor.next()) {
     if (doc == null) {
       return allCountries;
@@ -28,7 +28,7 @@ exports.getCountriesByLang = async function (req) {
   }
   const skip = limit * (page - 1);
   let allCountries = [];
-  const cursor = Country.find({ lang: lang, _deletedAt: null }).select('_id lang name shortName body').skip(skip).limit(limit).cursor();
+  const cursor = Country.find({ lang: lang, _deletedAt: null }).select('_id lang name shortName capital timeDifference description').skip(skip).limit(limit).cursor();
   for (let doc = await cursor.next(); ; doc = await cursor.next()) {
     if (doc == null) {
       return allCountries;
@@ -38,12 +38,12 @@ exports.getCountriesByLang = async function (req) {
 }
 
 exports.getCountryByNameWithLang = async function (lang, name) {
-  const currentCountry = await Country.find({ lang: lang, shortName: name, _deletedAt: null }).select('_id lang name shortName body');
+  const currentCountry = await Country.find({ lang: lang, shortName: name, _deletedAt: null }).select('_id lang name shortName capital timeDifference description');
   return currentCountry;
 }
 
-exports.createCountry = async function ({ name, shortName, lang, body } = {}) {
-  const country = new Country({ name, shortName, lang, body });
+exports.createCountry = async function (body = {}) {
+  const country = new Country(body);
   return country.save();
 }
 
@@ -58,8 +58,8 @@ exports.postAllCountries = async function (req, res) {
   });
 };
 
-exports.updateCountry = async function (id, { name, shortName, lang, body, _deletedAt }) {
-  const valuesToUpdate = { name, shortName, lang, body, _deletedAt };
+exports.updateCountry = async function (id, body) {
+  const valuesToUpdate = body;
   const newObject = Object.keys(valuesToUpdate).reduce((R, k) => {
     if (valuesToUpdate[k] !== undefined) {
       R[k] = valuesToUpdate[k];

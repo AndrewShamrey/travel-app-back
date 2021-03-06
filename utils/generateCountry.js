@@ -1,29 +1,27 @@
-function generateCountry(curBody) {
+function generateCountry(curBody = { name, shortName, lang, capital, timeDifference, description } ) {
   const body = curBody;
-  const name = body.name;
-  const lang = body.lang;
-  const shortName = body.shortName;
-  
-  if (!name || typeof name !== "string") {
-    return {message: `Param 'name' is required and should be 'String'`};
-  }
-  
-  if (!lang || typeof lang !== "string") {
-    return {message: `Param 'lang' is required and should be 'String'`};
-  }
+  valuesToValidate = Object.keys(curBody);
 
-  if (!shortName || typeof shortName !== "string") {
-    return {message: `Param 'shortName' is required and should be 'String'`};
-  }
+  valuesToValidate.forEach(key => {
+    let currentType;
+    switch (key) {
+      case timeDifference:
+        currentType = 'Number'
+        break;
+      default:
+        currentType = 'String'
+    }
 
-  if (body.id) {
-    delete body.id;
+    if (!body[key] || typeof body[key] !== currentType.toLowerCase()) {
+      return {message: `Param ${key} is required and should be '${currentType}'`};
+    }
+  });
+
+  if (body._id) {
+    delete body._id;
   }
   
-  delete body.name;
-  delete body.lang;
-  delete body.shortName;
-  return { name, shortName, lang, body };
+  return body;
 }
 
 module.exports = { generateCountry };
