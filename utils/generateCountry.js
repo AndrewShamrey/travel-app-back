@@ -5,7 +5,7 @@ function generateCountry(curBody = { name, shortName, lang, capital, timeDiffere
   valuesToValidate.forEach(key => {
     let currentType;
     switch (key) {
-      case timeDifference:
+      case 'timeDifference':
         currentType = 'Number'
         break;
       default:
