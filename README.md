@@ -26,7 +26,10 @@ READ list of countries by language -> /api/countries/:lang (en/ru/by)
 READ an existing country by its own name with language -> /api/countries/:lang/:name
 CREATE new country -> send POST request to address /api/countries 
 UPDATE an existing country by its own id -> send PUT request to address /api/countries/:id
-DELETE an existing country by its own id -> send DELETE request to address /api/countries/:id
+DELETE an existing country by its own id -> send DELETE request to address /api/countries/one/:id
+
+CREATE many countries -> send POST request to address /api/countries/all
+DELETE all countries -> send DELETE request to address /api/countries/all
 ```
 
 _The `name`, `shortName` and `lang` fields is mandatory and should be 'String'_
