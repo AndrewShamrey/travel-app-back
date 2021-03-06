@@ -9,7 +9,7 @@ exports.getCountries = async function (query) {
   }
   const skip = limit * (page - 1);
   let allCountries = [];
-  const cursor = Country.find({ _deletedAt: null }).select('_id lang name body').skip(skip).limit(limit).cursor();
+  const cursor = Country.find({ _deletedAt: null }).select('_id lang name shortName body').skip(skip).limit(limit).cursor();
   for (let doc = await cursor.next(); ; doc = await cursor.next()) {
     if (doc == null) {
       return allCountries;
@@ -28,7 +28,7 @@ exports.getCountriesByLang = async function (req) {
   }
   const skip = limit * (page - 1);
   let allCountries = [];
-  const cursor = Country.find({ lang: lang, _deletedAt: null }).select('_id lang name body').skip(skip).limit(limit).cursor();
+  const cursor = Country.find({ lang: lang, _deletedAt: null }).select('_id lang name shortName body').skip(skip).limit(limit).cursor();
   for (let doc = await cursor.next(); ; doc = await cursor.next()) {
     if (doc == null) {
       return allCountries;
@@ -38,7 +38,7 @@ exports.getCountriesByLang = async function (req) {
 }
 
 exports.getCountryByNameWithLang = async function (lang, name) {
-  const currentCountry = await Country.find({ lang: lang, shortName: name, _deletedAt: null }).select('_id lang name body');
+  const currentCountry = await Country.find({ lang: lang, shortName: name, _deletedAt: null }).select('_id lang name shortName body');
   return currentCountry;
 }
 
