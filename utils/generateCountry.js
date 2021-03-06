@@ -1,5 +1,5 @@
-function generateCountry(req) {
-  const body = req.body;
+function generateCountry(curBody) {
+  const body = curBody;
   const name = body.name;
   const lang = body.lang;
   const shortName = body.shortName;

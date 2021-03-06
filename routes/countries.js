@@ -5,8 +5,10 @@ const {
   getCountriesByLang,
   getCountryByNameWithLang,
   createCountry,
+  postAllCountries,
   updateCountry,
-  deleteCountry
+  deleteCountry,
+  deleteAllCountries
 } = require('../services');
 
 const { generateCountry } = require('../utils/generateCountry');
@@ -35,7 +37,7 @@ api.get("/:lang/:name", (req, res) => {
 });
 
 api.post("/", (req, res) => {
-  const newCountry = generateCountry(req);
+  const newCountry = generateCountry(req.body);
   if (newCountry.message) {
     return res.status(400).end(newCountry.message);
   }
@@ -44,9 +46,18 @@ api.post("/", (req, res) => {
     .catch((err) => res.status(500).end("Access failed"));
 });
 
+api.post("/all", (req, res) => {
+  postAllCountries(req, res)
+    .then(() => res.status(201).end("Countries was added!"))
+    .catch((err) => {
+      console.log(err);
+      res.status(500).end("Access failed")
+    });
+});
+
 api.put("/:id", (req, res) => {
   const id = req.params.id;
-  const newCountry = generateCountry(req);
+  const newCountry = generateCountry(req.body);
   if (newCountry.message) {
     return res.status(400).end(newCountry.message);
   }
@@ -55,9 +66,15 @@ api.put("/:id", (req, res) => {
     .catch((err) => res.status(500).end("Access failed"));
 });
 
-api.delete("/:id", (req, res) => {
+api.delete("/one/:id", (req, res) => {
   const id = req.params.id;
   deleteCountry(id)
+    .then(() => res.status(200).end("Resource deleted successfully!"))
+    .catch((err) => res.status(500).end("Access failed"));     
+});
+
+api.delete("/all", (req, res) => {
+  deleteAllCountries(req)
     .then(() => res.status(200).end("Resource deleted successfully!"))
     .catch((err) => res.status(500).end("Access failed"));     
 });
