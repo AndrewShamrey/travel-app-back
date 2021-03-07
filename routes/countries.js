@@ -9,7 +9,7 @@ const {
   updateCountry,
   deleteCountry,
   deleteAllCountries
-} = require('../services');
+} = require('../services/countries');
 
 const { generateCountry } = require('../utils/generateCountry');
 const { validateQuery } = require('../utils/validateQuery');
