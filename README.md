@@ -33,7 +33,9 @@ DELETE all countries -> send DELETE request to address /api/countries/all
 ```
  - _The `shortName` field is mandatory and should be 'String'_
  - _The `timeDifference` field is mandatory and should be 'Number'_
- - _The `mainPlace` field is mandatory and should be 'String' in base64 data_
+ - _The `latlng` field is mandatory and should ne 'Array' with coordinates of country_
+ - _The `mainPlace` field is mandatory and must contain `image` field with link to image and `en` `ru` and `be` fields that contain `name` and `description` fields_
+ - _The `video` field is mandatory and should be 'String'_
  - _The `info` field is mandatory and must contain `en` `ru` and `be` fields that contain `name`, `capital` and `description` fields_
  - _The `id` field is filled in automatically_
 
@@ -64,7 +66,7 @@ CREATE many places -> send POST request with array of places to address /api/pla
 DELETE all places -> send DELETE request to address /api/places/all
 ```
  - _The `country` field is mandatory and should be 'String'_
- - _The `image` field is mandatory and should be 'String' in base64 data_
+ - _The `image` field is mandatory and should be 'String'_
  - _The `rating` field should be 'Number'_
  - _The `personsId` field should be 'Array' which contain ID's of persons who rated the place_
  - _The `info` field is mandatory and must contain `en` `ru` and `be` fields that contain `name` and `description` fields_

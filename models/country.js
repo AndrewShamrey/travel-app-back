@@ -3,7 +3,9 @@ const { Schema, model } = require('mongoose');
 const countrySchema = new Schema({
   shortName: { type: String, required: true },
   timeDifference: { type: Number, required: true },
-  mainPlace: { type: String, required: true },
+  latlng: { type: Array, required: true },
+  mainPlace: { type: Schema.Types.Mixed, required: true },
+  video: { type: String, required: true },
   info: { type: Schema.Types.Mixed, required: true }, 
   _deletedAt: { type: Date, default: null, select: false },
 });
