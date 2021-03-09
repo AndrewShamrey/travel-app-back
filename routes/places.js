@@ -4,8 +4,10 @@ const {
   getPlaces,
   getPlacesByCountry,
   createPlace,
+  postAllPlaces,
   updatePlace,
-  deletePlace
+  deletePlace,
+  deleteAllPlaces
 } = require('../services/places');
 
 const { generateItem } = require('../utils/generateItem');
@@ -35,6 +37,12 @@ api.post("/", (req, res) => {
     .catch((err) => res.status(500).end(JSON.stringify(err)));
 });
 
+api.post("/all", (req, res) => {
+  postAllPlaces(req, res)
+    .then(() => res.status(201).end("Places was added!"))
+    .catch((err) => res.status(500).end("Access failed"));
+});
+
 api.put("/:id", (req, res) => {
   const id = req.params.id;
   const newPlace = generateItem("place", req.body);
@@ -54,11 +62,17 @@ api.patch('/:id', (req, res) => {
     .catch((err) => res.status(500).end("Access failed"));
 });
 
-api.delete("/:id", (req, res) => {
+api.delete("one/:id", (req, res) => {
   const id = req.params.id;
   deletePlace(id)
     .then(() => res.status(200).end("Resource deleted successfully!"))
     .catch((err) => res.status(500).end("Access failed"));
+});
+
+api.delete("/all", (req, res) => {
+  deleteAllPlaces(req)
+    .then(() => res.status(200).end("Resource deleted successfully!"))
+    .catch((err) => res.status(500).end("Access failed"));     
 });
 
 module.exports = api;

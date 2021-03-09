@@ -6,10 +6,10 @@ function generateItem(type, body) {
   let currentBody;
   switch (type) {
     case 'country':
-      currentBody = ["shortName", "timeDifference", "info"];
+      currentBody = ["shortName", "timeDifference", "mainPlace", "info"];
       break;
     case "place":
-      currentBody = ["country", "images", "rating", "personsId", "info"];
+      currentBody = ["country", "image", "rating", "personsId", "info"];
       break;
     case "person":
       currentBody = ["nickname", "pass", "photo"];
@@ -27,7 +27,6 @@ function generateItem(type, body) {
         currentType = 'Number'
         break;
       case "places":
-      case "images":
       case "personsId":
         currentType = "Array";
         break;
@@ -38,7 +37,7 @@ function generateItem(type, body) {
         currentType = 'String'
     }
 
-    if (key === "places" || key === "images" || key === "personsId") {
+    if (key === "places" || key === "personsId") {
       if (body[key] && !Array.isArray(body[key])) {
         return returnWarning(key, currentType);
       }

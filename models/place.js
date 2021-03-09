@@ -2,7 +2,7 @@ const { Schema, model } = require('mongoose');
 
 const placeSchema = new Schema({
   country: { type: String, required: true },
-  images: { type: Array, default: [] },
+  image: { type: String, required: true },
   rating: { type: Number, default: 0 },
   personsId: { type: Array, default: [] },
   info: { type: Schema.Types.Mixed, required: true },

@@ -41,6 +41,17 @@ exports.createPlace = async function (body = {}) {
   return place.save();
 }
 
+exports.postAllPlaces = async function (req, res) {
+  const allPlaces = req.body;
+  return await allPlaces.forEach(place => {
+    const newPlace = generateItem("place", place);
+    if (newPlace.message) {
+      return res.status(400).end(`In country '${place.name}' - ${newPlace.message}`);
+    }
+    exports.createPlace(newPlace);
+  });
+};
+
 exports.updatePlace = async function (id, body) {
   const newObject = Object.keys(body).reduce((R, k) => {
     if (body[k] !== undefined) {
@@ -53,4 +64,12 @@ exports.updatePlace = async function (id, body) {
 
 exports.deletePlace = async function (id) {
   return await exports.updatePlace(id, { _deletedAt: Date.now() });
+};
+
+exports.deleteAllPlaces = async function (req) {
+  // return await Place.deleteMany({});
+  const allPlaces = exports.getPlaces(req);
+  (await allPlaces).map(item => item._id).forEach(item => {
+    exports.updatePlace(item, { _deletedAt: Date.now() });
+  });
 };

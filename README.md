@@ -20,28 +20,64 @@ or
 
 ### Also you can start the server by following [this](https://travel-app-back-113.herokuapp.com/) link 
 
+__For Countries:__
 ```
 READ full list of countries -> /api/countries
-READ list of countries by language -> /api/countries/:lang (en/ru/by)
-READ an existing country by its own name with language -> /api/countries/:lang/:name
+READ an existing country by its own name -> /api/countries/:name
 CREATE new country -> send POST request to address /api/countries 
 UPDATE an existing country by its own id -> send PUT request to address /api/countries/:id
 DELETE an existing country by its own id -> send DELETE request to address /api/countries/one/:id
 
-CREATE many countries -> send POST request to address /api/countries/all
+CREATE many countries -> send POST request with array of countries to address /api/countries/all
 DELETE all countries -> send DELETE request to address /api/countries/all
 ```
+ - _The `shortName` field is mandatory and should be 'String'_
+ - _The `timeDifference` field is mandatory and should be 'Number'_
+ - _The `mainPlace` field is mandatory and should be 'String' in base64 data_
+ - _The `info` field is mandatory and must contain `en` `ru` and `be` fields that contain `name`, `capital` and `description` fields_
+ - _The `id` field is filled in automatically_
 
-_The `name`, `shortName` and `lang` fields is mandatory and should be 'String'_
+__For Persons:__
+```
+READ full list of persons -> /api/persons
+READ an existing person by its own nickname -> /api/persons/:name
+CREATE new person -> send POST request to address /api/persons/ 
+UPDATE an existing person by its own id -> send PUT request to address /api/persons/:id
+UPDATE same fields of an existing person by it own id -> send PATCH request to address /api/persons/:id
+DELETE an existing person by its own id -> send DELETE request to address /api/persons/:id
+```
+ - _The `nickname` field is mandatory, unique and should be 'String'_
+ - _The `pass` field is mandatory and should be 'String' with length between 8 and 20_
+ - _The `photo` field should be 'String' in base64 data_
+ - _The `id` field is filled in automatically_
 
-_The `id` field is filled in automatically_
+__For Places:__
+```
+READ full list of places -> /api/places
+READ an existing places by country -> /api/places/:country
+CREATE new place -> send POST request to address /api/places/ 
+UPDATE an existing place by its own id -> send PUT request to address /api/places/:id
+UPDATE same fields of an existing place by it own id -> send PATCH request to address /api/places/:id
+DELETE an existing place by its own id -> send DELETE request to address /api/places/one/:id
 
-Also you can read part of `Countries` using pagination. To do this, add the following parameters in the address bar:
+CREATE many places -> send POST request with array of places to address /api/places/all
+DELETE all places -> send DELETE request to address /api/places/all
+```
+ - _The `country` field is mandatory and should be 'String'_
+ - _The `image` field is mandatory and should be 'String' in base64 data_
+ - _The `rating` field should be 'Number'_
+ - _The `personsId` field should be 'Array' which contain ID's of persons who rated the place_
+ - _The `info` field is mandatory and must contain `en` `ru` and `be` fields that contain `name` and `description` fields_
+ - _The `id` field is filled in automatically_
+
+Also you can read part of data using pagination. To do this, add the following parameters in the address bar:
 
 ```
-Read first three countries -> /api/countries?page=1&limit=3
+Read second three countries -> /api/countries?page=2&limit=3
 
-Read second four countries in english -> /api/countries/en?page=2&limit=4
+Read first seven persons -> /api/persons?page=1&limit=7
+
+Read first five places in Australia -> /api/places/Australia?page=1
 ```
 
 If the `limit` parameter is undefined, it is automatically set to 5
