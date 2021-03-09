@@ -2,8 +2,7 @@ const { Router } = require("express");
 
 const {
   getCountries,
-  getCountriesByLang,
-  getCountryByNameWithLang,
+  getCountryByName,
   createCountry,
   postAllCountries,
   updateCountry,
@@ -11,7 +10,7 @@ const {
   deleteAllCountries
 } = require('../services/countries');
 
-const { generateCountry } = require('../utils/generateCountry');
+const { generateItem } = require('../utils/generateItem');
 const { validateQuery } = require('../utils/validateQuery');
 
 const api = Router();
@@ -22,22 +21,16 @@ api.get("/", validateQuery, (req, res) => {
     .catch((err) => res.status(500).end("Access failed"));
 });
 
-api.get("/:lang", validateQuery, (req, res) => {
-  getCountriesByLang(req)
-    .then(countries => res.json(countries))
-    .catch((err) => res.status(500).end("Access failed"));
-});
-
-api.get("/:lang/:name", (req, res) => {
-  const lang = req.params.lang;
+api.get("/:name", (req, res) => {
   const name = req.params.name;
-  getCountryByNameWithLang(lang, name)
+  getCountryByName(name)
     .then(country => res.json(country))
     .catch(err => res.status(404).end("Not found!"));
 });
 
 api.post("/", (req, res) => {
-  const newCountry = generateCountry(req.body);
+  const newCountry = generateItem("country", req.body);
+  console.log(newCountry);
   if (newCountry.message) {
     return res.status(400).end(newCountry.message);
   }
@@ -49,15 +42,12 @@ api.post("/", (req, res) => {
 api.post("/all", (req, res) => {
   postAllCountries(req, res)
     .then(() => res.status(201).end("Countries was added!"))
-    .catch((err) => {
-      console.log(err);
-      res.status(500).end("Access failed")
-    });
+    .catch((err) => res.status(500).end("Access failed"));
 });
 
 api.put("/:id", (req, res) => {
   const id = req.params.id;
-  const newCountry = generateCountry(req.body);
+  const newCountry = generateItem("country", req.body);
   if (newCountry.message) {
     return res.status(400).end(newCountry.message);
   }

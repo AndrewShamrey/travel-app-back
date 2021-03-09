@@ -23,11 +23,7 @@ const personSchema = new Schema({
       }
     }
   },
-  photo: String,
-  places: {
-    type: Array,
-    default: [] // [{placeId, stars}, {placeId, stars}]
-  }
+  photo: String
 });
 
 module.exports = model('person', personSchema);

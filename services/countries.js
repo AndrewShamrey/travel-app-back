@@ -1,5 +1,5 @@
 const Country = require('../models/country');
-const { generateCountry } = require('../utils/generateCountry');
+const { generateItem } = require('../utils/generateItem');
 
 exports.getCountries = async function (query) {
   const page = +query.page;
@@ -9,7 +9,7 @@ exports.getCountries = async function (query) {
   }
   const skip = limit * (page - 1);
   let allCountries = [];
-  const cursor = Country.find({ _deletedAt: null }).select('_id lang name shortName capital timeDifference description').skip(skip).limit(limit).cursor();
+  const cursor = Country.find({ _deletedAt: null }).skip(skip).limit(limit).cursor();
   for (let doc = await cursor.next(); ; doc = await cursor.next()) {
     if (doc == null) {
       return allCountries;
@@ -18,27 +18,8 @@ exports.getCountries = async function (query) {
   }
 }
 
-exports.getCountriesByLang = async function (req) {
-  const lang = req.params.lang;
-  const query = req.query;
-  const page = +query.page;
-  let limit = +query.limit;
-  if (page && !limit) {
-    limit = 5;
-  }
-  const skip = limit * (page - 1);
-  let allCountries = [];
-  const cursor = Country.find({ lang: lang, _deletedAt: null }).select('_id lang name shortName capital timeDifference description').skip(skip).limit(limit).cursor();
-  for (let doc = await cursor.next(); ; doc = await cursor.next()) {
-    if (doc == null) {
-      return allCountries;
-    }
-    allCountries.push(doc);
-  }
-}
-
-exports.getCountryByNameWithLang = async function (lang, name) {
-  const currentCountry = await Country.find({ lang: lang, shortName: name, _deletedAt: null }).select('_id lang name shortName capital timeDifference description');
+exports.getCountryByName = async function (name) {
+  const currentCountry = await Country.find({ shortName: name, _deletedAt: null });
   return currentCountry;
 }
 
@@ -50,7 +31,7 @@ exports.createCountry = async function (body = {}) {
 exports.postAllCountries = async function (req, res) {
   const allCountries = req.body;
   return await allCountries.forEach(country => {
-    const newCountry = generateCountry(country);
+    const newCountry = generateItem("country", country);
     if (newCountry.message) {
       return res.status(400).end(`In country '${country.name}' - ${newCountry.message}`);
     }
@@ -73,6 +54,7 @@ exports.deleteCountry = async function (id) {
 };
 
 exports.deleteAllCountries = async function (req) {
+  // return await Country.deleteMany({});
   const allCountries = exports.getCountries(req);
   (await allCountries).map(item => item._id).forEach(item => {
     exports.updateCountry(item, { _deletedAt: Date.now() });

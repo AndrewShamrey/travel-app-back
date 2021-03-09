@@ -7,13 +7,13 @@ exports.getPersons = async function (query) {
     limit = 5;
   }
   const skip = limit * (page - 1);
-  let allPeoples = [];
+  let allPersons = [];
   const cursor = Person.find({}).skip(skip).limit(limit).cursor();
   for (let doc = await cursor.next(); ; doc = await cursor.next()) {
     if (doc == null) {
-      return allPeoples;
+      return allPersons;
     }
-    allPeoples.push(doc);
+    allPersons.push(doc);
   }
 }
 

@@ -1,6 +1,9 @@
-function generateCountry(curBody = { name, shortName, lang, capital, timeDifference, description } ) {
-  const body = curBody;
-  valuesToValidate = Object.keys(curBody);
+const returnWarning = () => {
+  return { message: `Param ${key} is required and should be '${currentType}'` }
+};
+
+function generateCountry(body = { shortName, timeDifference, info } ) {
+  valuesToValidate = Object.keys(body);
 
   valuesToValidate.forEach(key => {
     let currentType;
@@ -8,12 +11,15 @@ function generateCountry(curBody = { name, shortName, lang, capital, timeDiffere
       case 'timeDifference':
         currentType = 'Number'
         break;
+      case "info":
+        currentType = "Object";
+        break;
       default:
         currentType = 'String'
     }
 
     if (!body[key] || typeof body[key] !== currentType.toLowerCase()) {
-      return {message: `Param ${key} is required and should be '${currentType}'`};
+      return returnWarning();
     }
   });
 
