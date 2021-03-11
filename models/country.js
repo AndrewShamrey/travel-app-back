@@ -4,6 +4,7 @@ const countrySchema = new Schema({
   shortName: { type: String, required: true },
   timeDifference: { type: Number, required: true },
   latlng: { type: Array, required: true },
+  currency: { type: Schema.Types.Mixed, required: true },
   mainPlace: { type: Schema.Types.Mixed, required: true },
   video: { type: String, required: true },
   info: { type: Schema.Types.Mixed, required: true }, 

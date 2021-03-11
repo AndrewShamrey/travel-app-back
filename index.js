@@ -11,7 +11,7 @@ const { port, mongo_connection } = require('./config');
 const app = express();
 const PORT = process.env.PORT || port || 3001;
 
-app.use(bodyParser.json({ type: 'application/json' }));
+app.use(bodyParser.json({ type: 'application/json', limit: '8mb' }));
 app.use(morgan("short"));
 app.use(cors());
 
