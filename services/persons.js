@@ -17,7 +17,7 @@ exports.getPersons = async function (query) {
   }
 }
 
-exports.getPersonWithoutPhoto = async function () {
+exports.getPersonWithoutPhoto = async function (query) {
   const page = +query.page;
   let limit = +query.limit;
   if (page && !limit) {
