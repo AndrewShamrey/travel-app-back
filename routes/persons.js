@@ -3,6 +3,8 @@ const { Router } = require("express");
 const {
   getPersons,
   getPersonByName,
+  getPersonWithoutPhoto,
+  getPersonByPass,
   createPerson,
   updatePerson,
   deletePerson
@@ -20,9 +22,24 @@ api.get("/", validateQuery, (req, res) => {
     .catch((err) => res.status(500).end("Access failed"));
 });
 
-api.get("/:name", (req, res) => {
+api.get("/full/:name", (req, res) => {
   const name = req.params.name;
   getPersonByName(name)
+    .then(person => res.json(person))
+    .catch(err => res.status(404).end("Not found!"));
+});
+
+api.get("/withoutPhoto/:name", (req, res) => {
+  const name = req.params.name;
+  getPersonWithoutPhoto(name)
+    .then(person => res.json(person))
+    .catch(err => res.status(404).end("Not found!"));
+});
+
+api.get("/one/:name/:pass", (req, res) => {
+  const name = req.params.name;
+  const pass = req.params.pass;
+  getPersonByPass(name, pass)
     .then(person => res.json(person))
     .catch(err => res.status(404).end("Not found!"));
 });
@@ -34,7 +51,7 @@ api.post("/", (req, res) => {
   }
   createPerson(newPerson)
     .then(() => res.status(201).end("New person was added!"))
-    .catch((err) => res.status(500).end(JSON.stringify(err)));
+    .catch((err) => res.status(400).end(JSON.stringify(err)));
 });
 
 api.put("/:id", (req, res) => {

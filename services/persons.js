@@ -22,6 +22,16 @@ exports.getPersonByName = async function (name) {
   return currentPerson;
 }
 
+exports.getPersonWithoutPhoto = async function (name) {
+  const currentPerson = await Person.find({ nickname: name }).select('_id nickname pass');
+  return currentPerson;
+}
+
+exports.getPersonByPass = async function (name, pass) {
+  const currentPerson = await Person.find({ nickname: name, pass: pass }).select('_id nickname photo');
+  return currentPerson;
+}
+
 exports.createPerson = async function (body = {}) {
   const person = new Person(body);
   return person.save();
