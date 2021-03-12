@@ -44,7 +44,7 @@ DELETE all countries -> send DELETE request to address /api/countries/all
 __For Persons:__
 ```
 READ full list of persons -> /api/persons
-READ full list of persons (without photo) -> /api/persons/withoutPhoto
+READ full list of persons (without photo) -> /api/persons/withoutphoto
 READ an existing person by its own nickname -> /api/persons/full/:name
 READ an existing person by its own nickname and password -> /api/persons/one/:name/:pass
 CREATE new person -> send POST request to address /api/persons
