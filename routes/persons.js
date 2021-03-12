@@ -22,16 +22,15 @@ api.get("/", validateQuery, (req, res) => {
     .catch((err) => res.status(500).end("Access failed"));
 });
 
-api.get("/full/:name", (req, res) => {
-  const name = req.params.name;
-  getPersonByName(name)
+api.get("/withoutPhoto/", validateQuery, (req, res) => {
+  getPersonWithoutPhoto(req.query)
     .then(person => res.json(person))
     .catch(err => res.status(404).end("Not found!"));
 });
 
-api.get("/withoutPhoto/:name", (req, res) => {
+api.get("/full/:name", (req, res) => {
   const name = req.params.name;
-  getPersonWithoutPhoto(name)
+  getPersonByName(name)
     .then(person => res.json(person))
     .catch(err => res.status(404).end("Not found!"));
 });

@@ -44,10 +44,10 @@ DELETE all countries -> send DELETE request to address /api/countries/all
 __For Persons:__
 ```
 READ full list of persons -> /api/persons
+READ full list of persons (without photo) -> /api/persons/withoutPhoto
 READ an existing person by its own nickname -> /api/persons/full/:name
-READ an existing person by its own nickname (without photo) -> /api/persons/withoutPhoto/:name
 READ an existing person by its own nickname and password -> /api/persons/one/:name/:pass
-CREATE new person -> send POST request to address /api/persons/ 
+CREATE new person -> send POST request to address /api/persons
 UPDATE an existing person by its own id -> send PUT request to address /api/persons/:id
 UPDATE same fields of an existing person by it own id -> send PATCH request to address /api/persons/:id
 DELETE an existing person by its own id -> send DELETE request to address /api/persons/:id
@@ -61,7 +61,7 @@ __For Places:__
 ```
 READ full list of places -> /api/places
 READ an existing places by country -> /api/places/:country
-CREATE new place -> send POST request to address /api/places/ 
+CREATE new place -> send POST request to address /api/places
 UPDATE an existing place by its own id -> send PUT request to address /api/places/:id
 UPDATE same fields of an existing place by it own id -> send PATCH request to address /api/places/:id
 DELETE an existing place by its own id -> send DELETE request to address /api/places/one/:id

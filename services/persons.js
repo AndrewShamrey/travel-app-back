@@ -17,13 +17,25 @@ exports.getPersons = async function (query) {
   }
 }
 
-exports.getPersonByName = async function (name) {
-  const currentPerson = await Person.find({ nickname: name });
-  return currentPerson;
+exports.getPersonWithoutPhoto = async function () {
+  const page = +query.page;
+  let limit = +query.limit;
+  if (page && !limit) {
+    limit = 5;
+  }
+  const skip = limit * (page - 1);
+  let allPersons = [];
+  const cursor = Person.find({}).select('_id nickname pass').skip(skip).limit(limit).cursor();
+  for (let doc = await cursor.next(); ; doc = await cursor.next()) {
+    if (doc == null) {
+      return allPersons;
+    }
+    allPersons.push(doc);
+  }
 }
 
-exports.getPersonWithoutPhoto = async function (name) {
-  const currentPerson = await Person.find({ nickname: name }).select('_id nickname pass');
+exports.getPersonByName = async function (name) {
+  const currentPerson = await Person.find({ nickname: name });
   return currentPerson;
 }
 
