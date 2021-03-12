@@ -1,4 +1,5 @@
 const Place = require('../models/place');
+const { generateItem } = require('../utils/generateItem');
 
 exports.getPlaces = async function (query) {
   const page = +query.page;
@@ -46,7 +47,7 @@ exports.postAllPlaces = async function (req, res) {
   return await allPlaces.forEach(place => {
     const newPlace = generateItem("place", place);
     if (newPlace.message) {
-      return res.status(400).end(`In country '${place.name}' - ${newPlace.message}`);
+      return res.status(400).end(`In country '${place.country}' - ${newPlace.message}`);
     }
     exports.createPlace(newPlace);
   });
