@@ -6,7 +6,7 @@ function generateItem(type, body) {
   let currentBody;
   switch (type) {
     case 'country':
-      currentBody = ["shortName", "timeDifference", "latlng", "capitalCoord", "currency", "mainPlace", "video", "info"];
+      currentBody = ["shortName", "timeDifference", "latlng", "iso3166", "capitalCoord", "currency", "mainPlace", "video", "info"];
       break;
     case "place":
       currentBody = ["country", "image", "rating", "personsId", "info"];
