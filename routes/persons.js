@@ -5,6 +5,7 @@ const {
   getPersonByName,
   getPersonWithoutPhoto,
   getPersonByPass,
+  getPersonsDataById,
   createPerson,
   updatePerson,
   deletePerson
@@ -25,6 +26,13 @@ api.get('/', validateQuery, (req, res) => {
 api.get('/withoutphoto', validateQuery, (req, res) => {
   getPersonWithoutPhoto(req.query)
     .then(persons => res.json(persons))
+    .catch((err) => res.status(500).end('Access failed'));
+});
+
+api.get('/ratingdata/:array', (req, res) => {
+  const array = req.params.array;
+  getPersonsDataById(array)
+    .then(data => res.json(data))
     .catch((err) => res.status(500).end('Access failed'));
 });
 

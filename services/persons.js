@@ -44,6 +44,16 @@ exports.getPersonByPass = async function (name, pass) {
   return currentPerson;
 }
 
+exports.getPersonsDataById = async function (array) {
+  const sourceArr = JSON.parse(array);
+  let outputArr = [];
+  for (let i = 0; i < sourceArr.length; i++) {
+    const personInfo = await Person.find({ _id: sourceArr[i].id }).select('_id nickname photo');
+    outputArr.push([personInfo[0], {rating: sourceArr[i].rating}]);
+  }
+  return outputArr;
+}
+
 exports.createPerson = async function (body = {}) {
   const person = new Person(body);
   return person.save();
