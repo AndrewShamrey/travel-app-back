@@ -33,8 +33,9 @@ DELETE all countries -> send DELETE request to address /api/countries/all
 ```
  - _The `shortName` field is mandatory and should be 'String'_
  - _The `timeDifference` field is mandatory and should be 'Number'_
- - _The `latlng` field is mandatory and should ne 'Array' with coordinates of country_
- - _The `capitalCoord` field is mandatory and should ne 'Array' with coordinates of country's capital_
+ - _The `latlng` field is mandatory and should be 'Array' with coordinates of country_
+ - _The `iso3166` field is mandatory and should be 'String' with 2 latter in ISO standard_
+ - _The `capitalCoord` field is mandatory and should be 'Array' with coordinates of country's capital_
  - _The `currency` field is mandatory and must contain `code`, `name` and `symbol` fields that represent information about the currency of the country_
  - _The `mainPlace` field is mandatory and must contain `image` field with link to image and `en` `ru` and `be` fields that contain `name` and `description` fields_
  - _The `video` field is mandatory and should be 'String'_
@@ -71,7 +72,7 @@ DELETE all places -> send DELETE request to address /api/places/all
 ```
  - _The `country` field is mandatory and should be 'String'_
  - _The `image` field is mandatory and should be 'String'_
- - _The `rating` field should be 'Number'_
+ - _The `rating` field is mandatory and must contain `number` and `count` fields_
  - _The `personsId` field should be 'Array' which contain ID's of persons who rated the place_
  - _The `info` field is mandatory and must contain `en` `ru` and `be` fields that contain `name` and `description` fields_
  - _The `id` field is filled in automatically_
