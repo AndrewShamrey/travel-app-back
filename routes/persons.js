@@ -57,7 +57,8 @@ api.post('/', (req, res) => {
     return res.status(400).end(newPerson.message);
   }
   createPerson(newPerson)
-    .then(() => res.status(201).end('New person was added!'))
+    .then(() => getPersonByPass(newPerson.nickname, newPerson.pass))
+    .then((person) => res.status(201).json(person))
     .catch((err) => res.status(400).end(JSON.stringify(err)));
 });
 
