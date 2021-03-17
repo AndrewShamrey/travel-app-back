@@ -22,7 +22,6 @@ function generateItem(type, body) {
     const key = currentBody[index];
     let currentType;
     switch (key) {
-      case "rating":
       case 'timeDifference':
         currentType = 'Number'
         break;
@@ -32,6 +31,7 @@ function generateItem(type, body) {
       case "personsId":
         currentType = "Array";
         break;
+      case "rating":        
       case "mainPlace":
       case "currency":
       case "info":
